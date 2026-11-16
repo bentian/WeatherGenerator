@@ -118,20 +118,20 @@ GitHub+1
 
 如果只提供預報起始日的 soil moisture：
 
-\\[ SM(t_0) \\]
+$$ \text{SM}(t_0) $$
 
 模型可以利用當天的乾濕狀態，但不一定能區分「剛開始變乾」與「已經持續乾旱三週」。
 
 我建議使用多個前期時間尺度：
 
-\\[ X\_{\mathrm{land}}= \left[ SM(t_0), \overline{SM}\_{7d}, \overline{SM}\_{30d}, P\_{\mathrm{antecedent}} \right] \\]
+$$ X_{\mathrm{land}} = \left[ \text{SM}(t_0), \overline{\text{SM}}_{7\text{d}}, \overline{\text{SM}}_{30\text{d}}, P_{\mathrm{antecedent}} \right] $$
 
 其中：
 
-- \\(SM(t_0)\\)：初始土壤濕度。
-- \\(\overline{SM}\_{7d}\\)：前 7 天平均土壤濕度。
-- \\(\overline{SM}\_{30d}\\)：前 30 天平均土壤濕度。
-- \\(P\_{\mathrm{antecedent}}\\)：前期累積降雨。
+- $\text{SM}(t_0)$：初始土壤濕度。
+- $\overline{\text{SM}}_{7\text{d}}$：前 7 天平均土壤濕度。
+- $\overline{\text{SM}}_{30\text{d}}$：前 30 天平均土壤濕度。
+- $P_{\mathrm{antecedent}}$：前期累積降雨。
 
 這些可以作為額外 channels，或透過 WeatherGenerator 支援的多時間步輸入路徑整合。
 
@@ -167,7 +167,7 @@ GitHub+1
 
 ### 避免資料洩漏
 
-所有輸入都必須在預報起始時間 \\(t_0\\) 已經可用。
+所有輸入都必須在預報起始時間 $t_0$ 已經可用。
 
 例如預報未來第 5 天熱浪時，不能使用第 5 天的 ERA5 reanalysis、TReAD 或事後處理的衛星產品作為輸入。
 
@@ -218,9 +218,9 @@ GitHub
 
 若採用 ensemble training，可以考慮 CRPS：
 
-\\[ \mathrm{CRPS} = \frac{1}{M}\sum\_{m=1}^{M}|x_m-y| - \frac{1}{2M^2}\sum\_{m=1}^{M}\sum\_{n=1}^{M}|x_m-x_n| \\]
+$$ \mathrm{CRPS} = \frac{1}{M}\sum_{m=1}^{M}|x_m-y| - \frac{1}{2M^2}\sum_{m=1}^{M}\sum_{n=1}^{M}|x_m-x_n| $$
 
-其中 \\(M\\) 是 ensemble members 數量。
+其中 $M$ 是 ensemble members 數量。
 
 CRPS 可以同時評估 ensemble 的準確性與機率分布品質，但實際訓練時仍需要確認 WeatherGenerator 的 loss interface 是否支援。
 
@@ -230,9 +230,9 @@ CRPS 可以同時評估 ensemble 的準確性與機率分布品質，但實際�
 
 例如可以定義：
 
-\\[ HW(t)= \begin{cases} 1, & T\_{\max}(t)>T\_{90}(d)\\\ 0, & \text{otherwise} \end{cases} \\]
+$$ HW(t)= \begin{cases} 1, & T_{\max}(t)>T_{90}(d)\\ 0, & \text{otherwise} \end{cases} $$
 
-其中 \\(T\_{90}(d)\\) 是依據歷史資料、以年內日期 \\(d\\) 定義的 Tmax 第 90 百分位門檻。
+其中 $T_{90}(d)$ 是依據歷史資料、以年內日期 $d$ 定義的 Tmax 第 90 百分位門檻。
 
 若連續至少 3 天超過門檻，就定義為一次熱浪事件。這只是建議的研究定義，正式實驗應與 Lin et al. (2025) 的定義保持一致，或另外進行敏感度測試。
 
@@ -292,15 +292,15 @@ A. Soil moisture–temperature coupling
 
 計算前期 soil moisture anomaly 與後續 Tmax anomaly 的相關性：
 
-\\[ r(\mathrm{SM}\_{t-k},T\_{\max,t}) \\]
+$$ r(\mathrm{SM}_{t-k},T_{\max,t}) $$
 
 並比較 observation、atmospheric baseline 和 atmosphere + soil moisture 三者的關係。
 
 B. Evaporative fraction
 
-若資料有 sensible heat flux \\(H\\) 與 latent heat flux \\(LE\\)，可以計算：
+若資料有 sensible heat flux $H$ 與 latent heat flux $\text{LE}$，可以計算：
 
-\\[ EF=\frac{LE}{H+LE} \\]
+$$ \text{EF} = \frac{\text{LE}}{H + \text{LE}} $$
 
 需統一通量正負號，並對分母過小或非日間條件做適當處理。
 

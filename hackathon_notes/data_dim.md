@@ -39,7 +39,7 @@ ae_global_dim_embed: 2048      # D_glob
 
 #### **$N_{\text{cells}}$ — Number of HEALPix Cells on Earth**
 - **Definition:** The Earth's spherical surface is partitioned using the HEALPix hierarchical grid system. The total number of cells covering the globe is given by:
-  $$\text{N\_cells} = 12 \times 4^{\text{healpix\_level}}$$
+  $$N_{\text{cells}} = 12 \times 4^{\text{healpix\_level}}$$
 - **Examples:**
   - **`healpix_level: 4`** $\to 12 \times 4^4 = \mathbf{3{,}072}$ cells (~$3.7^\circ$ resolution, ~400 km spacing).
   - **`healpix_level: 5` (Default)** $\to 12 \times 4^5 = \mathbf{12{,}288}$ cells (~$1.8^\circ$ resolution, ~200 km spacing).

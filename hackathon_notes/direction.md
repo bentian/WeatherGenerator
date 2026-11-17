@@ -13,45 +13,7 @@ Pretrained WeatherGenerator + Multisource Assimilation + Regional Forecast Decod
 
 ## 1. 建議的整體架構
 
-Atmospheric streams
-
-ERA5 · TReAD
-
-T, Z, U, V, Q, SLP, precipitation
-
-Land-surface streams
-
-ERA5-Land · SMAP · ESA CCI
-
-Soil moisture, soil temperature
-
-Station observations + static features
-
-Tmax, RH, station locations, terrain, land cover
-
-WeatherGenerator Stream Encoders
-
-Existing supported streams + new adapters if necessary
-
-Local Assimilation
-
-融合不同資料來源、位置與觀測時間
-
-Global Assimilation
-
-大尺度環流、區域土壤—大氣耦合
-
-Forecasting Engine
-
-預報未來 1–7 天的 latent state
-
-Taiwan Regional Decoder
-
-預報 Tmax、T2m、soil moisture 等變數
-
-Ensemble + Physical Diagnostics
-
-Heatwave duration · intensity · spread · reliability · energy partitioning
+![image](charts/workflow.png)
 
 這是建議的研究架構，並不代表 WeatherGenerator 目前已經原生支援所有資料來源、預報步長或系集產生方式。
 
@@ -260,29 +222,7 @@ $$ HW(t)= \begin{cases} 1, & T_{\max}(t)>T_{90}(d)\\ 0, & \text{otherwise} \end{
 
 你可以使用 Lin et al. (2025) 已發表的診斷方法，檢查下列關係。
 
-Large-scale circulation
-
-Subtropical high · subsidence · moisture transport
-
-Precipitation deficit
-
-Antecedent rainfall anomalies
-
-Soil moisture depletion
-
-Dry soil conditions and persistence
-
-Sensible heat
-
-H
-
-Latent heat
-
-LE
-
-Heatwave intensity and persistence
-
-Tmax anomalies · duration
+![image](charts/diagnosis.png)
 
 研究假說的概念路徑；實際關係可能受季節、地形、植被與大氣條件調節，不能僅由相關性推論因果。
 

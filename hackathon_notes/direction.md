@@ -67,10 +67,8 @@ Local Assimilation 的工作是整合這些不同來源的資訊，產生局部 
 我不建議在 proof of concept 同時調整這些參數，因為會難以區分改善來自 soil moisture，還是來自 architecture change。
 
 目前原始碼已包含 `ForecastingEngine`，並使用 `forecast_att_dense_rate`、`fe_num_blocks` 等設定；但是否能直接做 1–7 天預報，仍需要確認 checkpoint 的 forecasting policy 和訓練配置。
-
-[image](https://www.google.com/s2/favicons?domain=https://github.com\&sz=32)
-
-GitHub+1
+([engines.py](https://github.com/ecmwf/WeatherGenerator/blob/develop/src/weathergen/model/engines.py) &
+[model.py](https://github.com/ecmwf/WeatherGenerator/blob/develop/src/weathergen/model/model.py))
 
 
 
@@ -139,12 +137,7 @@ $$ X_{\mathrm{land}} = \left[ \text{SM}(t_0), \overline{\text{SM}}_{7\text{d}}, 
 
 ## 5. Ensemble Prediction：我會如何設計？
 
-WeatherGenerator 的原始碼包含 `EnsPredictionHead`，並透過各 stream 的 `pred_head.ens_size` 設定 ensemble output size。
-
-[image](https://www.google.com/s2/favicons?domain=https://github.com\&sz=32)
-
-GitHub
-
+WeatherGenerator 的原始碼包含 `EnsPredictionHead`，並透過各 stream 的 `pred_head.ens_size` 設定 ensemble output size。([model.py](https://github.com/ecmwf/WeatherGenerator/blob/develop/src/weathergen/model/model.py))
 
 
 但這不代表只要把 `ens_size` 從 1 改成 16，就能得到經過校準、具有合理 ensemble spread 的機率預報。還需要確認訓練損失、ensemble member 的產生方式，以及 checkpoint 是否支援相應設定。
@@ -296,15 +289,10 @@ Taiwan Heatwave PoC — Configuration
 
 ### 與 WeatherGenerator 官方應用的關聯
 
-你的提案結合了兩個已公開的 WeatherGenerator 研究方向：
+你的提案結合了兩個已公開的 [Weather Generator](https://weathergenerator.eu/about/) 研究方向：
 
 - AP6（Météo-France）：高解析度短期 ensemble forecasting，並研究 lateral boundary conditions 與 physical consistency。
 - AP13（CMCC）：氣候極端事件的時空降尺度與 ensemble 評估，包含溫度和降水極端值。
-
-  [image](https://www.google.com/s2/favicons?domain=https://weathergenerator.eu\&sz=32)
-
-  Weather Generator
-
 
 
 但你的研究另外強調 soil moisture memory、multisource observations 和 land–atmosphere coupling，因此具有不同的研究重點。
